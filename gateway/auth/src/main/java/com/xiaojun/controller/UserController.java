@@ -21,4 +21,10 @@ public class UserController {
     public String info() {
         return "info";
     }
+
+    @GetMapping("/me")
+    @ResponseBody
+    public String me() {
+        return "me";
+    }
 }

@@ -2,6 +2,7 @@ package com.xiaojun.config;
 
 import com.xiaojun.Handler.CustomAuthenticationFailureHandler;
 import com.xiaojun.Handler.CustomAuthenticationSuccessHandler;
+import com.xiaojun.authority.AppFilterInvocationSecurityMetadataSource;
 import com.xiaojun.filter.SmsCodeFilter;
 import com.xiaojun.filter.ValidateCodeFilter;
 import com.xiaojun.sms.SmsCodeAuthenticationConfig;
@@ -9,7 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,11 +24,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * web安全配置 SecurityConfiguration
@@ -94,6 +105,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
                 .and()
                 .authorizeRequests()
+                .antMatchers("/me").hasAuthority("ROLE_ADMIN")
+                .accessDecisionManager(accessDecisionManager())
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
+                        fsi.setSecurityMetadataSource(mySecurityMetadataSource(fsi.getSecurityMetadataSource()));
+                        return fsi;
+                    }
+                })
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -115,6 +135,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         /// jdbcTokenRepository.setCreateTableOnStartup(true); 第一次启动的时候自动建表
         return jdbcTokenRepository;
+    }
+
+    @Bean
+    public AppFilterInvocationSecurityMetadataSource mySecurityMetadataSource(FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource) {
+        AppFilterInvocationSecurityMetadataSource appFilterInvocationSecurityMetadataSource =
+                new AppFilterInvocationSecurityMetadataSource(filterInvocationSecurityMetadataSource);
+        return appFilterInvocationSecurityMetadataSource;
+    }
+
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        List<AccessDecisionVoter<? extends Object>> decisionVoters
+                = Arrays.asList(
+                new WebExpressionVoter(),
+                new RoleVoter());
+        return new UnanimousBased(decisionVoters);
     }
 
     public static void main(String[] args) {
