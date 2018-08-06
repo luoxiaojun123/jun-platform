@@ -2,6 +2,7 @@ package com.xiaojun.config;
 
 import com.xiaojun.Handler.CustomAuthenticationFailureHandler;
 import com.xiaojun.Handler.CustomAuthenticationSuccessHandler;
+import com.xiaojun.filter.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sound.midi.Soundbank;
+import javax.sql.DataSource;
 
 /**
  * web安全配置 SecurityConfiguration
@@ -38,6 +43,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
+
+    @Autowired
+    private DataSource dataSource;
+
 
     @Override
     @Bean
@@ -61,21 +73,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/userLogin")
+                .loginProcessingUrl("/user/login")
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
                 .and()
-            .authorizeRequests()
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(3600)
+                .userDetailsService(userDetailsService)
+                .and()
+                .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
-            .logout()
-                .permitAll()
+                .logout().permitAll()
                 .and()
-            .csrf().disable();
+                .csrf().disable();
     }
 
     @Bean
@@ -83,7 +99,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    public static void main(String[] args){
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+
+        /// jdbcTokenRepository.setCreateTableOnStartup(true); 第一次启动的时候自动建表
+        return jdbcTokenRepository;
+    }
+
+    public static void main(String[] args) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         System.out.println(bCryptPasswordEncoder.encode("123456"));
     }

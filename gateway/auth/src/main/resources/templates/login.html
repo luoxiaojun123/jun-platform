@@ -5,9 +5,11 @@
     <title>登录</title>
 </head>
 <body>
-    <form action="/userLogin" method="post">
-        用户：<input type="text" name="username">
-        密码：<input type="password" name="password">
+    <form action="/user/login" method="post">
+        用户：<input type="text" name="username"/>
+        密码：<input type="password" name="password"/>
+        验证码：<input type="text" name="imageCode"/>
+        <input name="remember-me" type="checkbox" value="true"/> 记住我
         <input type="submit" value="登录">
     </form>
 </body>

@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by xiaojun on 2018/8/6.
+ * @author long.luo
+ * @date 2018/8/6 14:48
  */
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -23,8 +24,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        System.out.println("登录失败");
-        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());//500错误
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(objectMapper.writeValueAsString(exception));
     }
