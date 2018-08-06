@@ -17,4 +17,13 @@ public interface UserRepository extends CrudRepository<User, Integer> {
      * @return
      */
     User findByUsername(String username);
+
+
+    /**
+     * 根据手机号码获取user
+     *
+     * @param mobile
+     * @return
+     */
+    User findByMobile(String mobile);
 }

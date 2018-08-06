@@ -5,12 +5,22 @@
     <title>登录</title>
 </head>
 <body>
-    <form action="/user/login" method="post">
-        用户：<input type="text" name="username"/>
-        密码：<input type="password" name="password"/>
-        验证码：<input type="text" name="imageCode"/>
-        <input name="remember-me" type="checkbox" value="true"/> 记住我
+    <p>
+         <form action="/user/login" method="post">
+             用户：<input type="text" name="username"/>
+             密码：<input type="password" name="password"/>
+             验证码：<input type="text" name="imageCode"/>
+             <input name="remember-me" type="checkbox" value="true"/> 记住我
+             <input type="submit" value="登录">
+        </form>
+    </p>
+
+    <p>
+        <form action="/mobile/login" method="post">
+            手机号码：<input type="text" name="mobile"/>
+            验证码：<input type="text" name="smsCode"/>
         <input type="submit" value="登录">
     </form>
+    </p>
 </body>
 </html>

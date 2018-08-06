@@ -2,7 +2,9 @@ package com.xiaojun.config;
 
 import com.xiaojun.Handler.CustomAuthenticationFailureHandler;
 import com.xiaojun.Handler.CustomAuthenticationSuccessHandler;
+import com.xiaojun.filter.SmsCodeFilter;
 import com.xiaojun.filter.ValidateCodeFilter;
+import com.xiaojun.sms.SmsCodeAuthenticationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import javax.sound.midi.Soundbank;
 import javax.sql.DataSource;
 
 /**
@@ -48,7 +49,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private ValidateCodeFilter validateCodeFilter;
 
     @Autowired
+    private SmsCodeFilter smsCodeFilter;
+
+    @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private SmsCodeAuthenticationConfig smsCodeAuthenticationConfig;
 
 
     @Override
@@ -74,6 +81,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/user/login")
@@ -91,7 +99,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .apply(smsCodeAuthenticationConfig);
     }
 
     @Bean
