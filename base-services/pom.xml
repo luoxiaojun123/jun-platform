@@ -9,8 +9,37 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <easypoi.version>3.2.0</easypoi.version>
+    </properties>
+
     <groupId>com.xiaojun</groupId>
     <artifactId>base-services</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.xiaojun</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>${easypoi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>${easypoi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>${easypoi.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

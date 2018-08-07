@@ -1,0 +1,16 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: base-service
+  profiles:
+    active: dev
+
+
+
+
+
+
+
+
+
