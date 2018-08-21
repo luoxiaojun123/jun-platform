@@ -12,11 +12,11 @@ security:
   oauth2:
     resource:
       #id: oauth2-resource
-      token-info-uri: http://localhost:9001/oauth/check_token
+      token-info-uri: http://localhost:9001/oauth/check_token #远程认证
       prefer-token-info: true
     client:
-      client-id: client
-      client-secret: secret
+      client-id: client #远程认证
+      client-secret: secret #远程认证
       #access-token-uri: http://localhost:9001/oauth/token
       #user-authorization-uri: http://localhost:9001/oauth/authorize
 
