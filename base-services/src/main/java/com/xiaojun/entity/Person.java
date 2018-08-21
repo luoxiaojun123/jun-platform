@@ -1,4 +1,4 @@
-package xiaojun.entity;
+package com.xiaojun.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 

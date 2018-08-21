@@ -1,4 +1,4 @@
-package xiaojun.listener.activiti;
+package com.xiaojun.activiti.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.delegate.DelegateTask;

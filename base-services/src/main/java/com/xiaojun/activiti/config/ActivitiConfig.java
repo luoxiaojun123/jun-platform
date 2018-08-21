@@ -1,4 +1,4 @@
-package xiaojun.config;
+package com.xiaojun.activiti.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.activiti.engine.*;
@@ -6,6 +6,7 @@ import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
@@ -74,6 +75,7 @@ public class ActivitiConfig {
     }
 
     @Bean
+    @Primary
     public DataSource dataSource(){
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(env.getProperty("spring.datasource.url"));

@@ -1,0 +1,31 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: remote-resource-server
+  profiles:
+    active: dev
+logging:
+  level:
+    org.springframework: DEBUG
+security:
+  oauth2:
+    resource:
+      #id: oauth2-resource
+      token-info-uri: http://localhost:9001/oauth/check_token
+      prefer-token-info: true
+    client:
+      client-id: client
+      client-secret: secret
+      #access-token-uri: http://localhost:9001/oauth/token
+      #user-authorization-uri: http://localhost:9001/oauth/authorize
+
+
+
+
+
+
+
+
+
+
