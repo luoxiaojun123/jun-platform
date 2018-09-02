@@ -1,0 +1,22 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: consul-server
+  cloud:
+    consul:
+      discovery:
+        health-check-path: /health
+        health-check-interval: 10s
+        instance-id: consul-server
+
+
+
+
+
+
+
+
+
+
+
