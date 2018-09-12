@@ -13,6 +13,7 @@
         <module>base-services</module>
         <module>gateway</module>
         <module>common</module>
+        <module>fegin</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
