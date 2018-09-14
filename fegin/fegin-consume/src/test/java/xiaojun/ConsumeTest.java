@@ -24,7 +24,8 @@ public class ConsumeTest {
     public ProvideClient provideClient;
 
     @Test
-    public void testInfo() {
+    public void testInfo() throws Exception {
         System.out.println(provideClient.info("wo"));
+        Thread.sleep(5 * 1000);
     }
 }

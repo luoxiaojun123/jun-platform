@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableFeignClients(basePackages =("com.xiaojun.api"))
+@EnableFeignClients(basePackages = ("com.xiaojun.api"))
 public class ConsumeApplication {
     public static void main(String[] args) {
         SpringApplication.run(ConsumeApplication.class, args);
