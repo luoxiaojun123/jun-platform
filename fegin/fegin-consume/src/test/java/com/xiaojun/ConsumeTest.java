@@ -1,4 +1,4 @@
-package xiaojun;
+package com.xiaojun;
 
 import com.xiaojun.ConsumeApplication;
 import com.xiaojun.api.ProvideClient;
