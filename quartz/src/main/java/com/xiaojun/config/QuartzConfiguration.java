@@ -43,7 +43,7 @@ public class QuartzConfiguration {
         return tigger;
     }
 
-    @Bean(name = "scheduler")
+    @Bean(name = "schedulerTask")
     public SchedulerFactoryBean schedulerFactoryBean(Trigger cronJobTrigger){
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
         bean.setOverwriteExistingJobs(true);

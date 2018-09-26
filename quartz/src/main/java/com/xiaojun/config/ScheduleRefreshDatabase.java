@@ -4,6 +4,7 @@ import com.xiaojun.mapper.CronConfigMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,10 +21,9 @@ public class ScheduleRefreshDatabase {
     @Autowired
     private CronConfigMapper cronConfigMapper;
     @Autowired
-    private JobDetail jobDetail;
-    @Autowired
     private CronTrigger cronTrigger;
     @Autowired
+    @Qualifier("schedulerTask")
     private Scheduler scheduler;
 
     @Scheduled(fixedRate = 5000)
