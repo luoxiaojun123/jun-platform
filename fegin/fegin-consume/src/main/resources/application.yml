@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: fegin-consume-service
+server:
+  port: 6001
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 20
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true # 后期版本需要设置这个 feign自定义fallback 才生效
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 30000
+hystrix:
+  shareSecurityContext: true
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 60000
+        forceClosed: true
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 80000
+
+
