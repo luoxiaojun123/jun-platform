@@ -34,7 +34,7 @@ public class Test {
 
     }
 
-    public static OutputStream setWatermark(OutputStream bos, String input,
+    private static OutputStream setWatermark(OutputStream bos, String input,
                                     String waterMarkName, int permission) throws DocumentException, IOException {
 
         PdfReader reader = new PdfReader(input);
@@ -76,7 +76,7 @@ public class Test {
         return bos;
     }
 
-    public static void inputstreamtofile(InputStream ins,File file) throws Exception{
+    private static void inputstreamtofile(InputStream ins,File file) throws Exception{
         OutputStream os = new FileOutputStream(file);
         int bytesRead = 0;
         byte[] buffer = new byte[8192];
