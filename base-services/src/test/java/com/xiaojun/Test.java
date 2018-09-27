@@ -30,12 +30,11 @@ public class Test {
         ByteArrayOutputStream out = (ByteArrayOutputStream) outputStream1;
         InputStream in = new ByteArrayInputStream(out.toByteArray());
 
-        inputstreamtofile(in,new File("E:\\水印123.pdf"));
+        inputstreamtofile(in, new File("E:\\水印123.pdf"));
 
     }
 
-    private static OutputStream setWatermark(OutputStream bos, String input,
-                                    String waterMarkName, int permission) throws DocumentException, IOException {
+    private static OutputStream setWatermark(OutputStream bos, String input, String waterMarkName, int permission) throws DocumentException, IOException {
 
         PdfReader reader = new PdfReader(input);
         PdfStamper stamper = new PdfStamper(reader, bos);
@@ -76,7 +75,7 @@ public class Test {
         return bos;
     }
 
-    private static void inputstreamtofile(InputStream ins,File file) throws Exception{
+    private static void inputstreamtofile(InputStream ins, File file) throws Exception {
         OutputStream os = new FileOutputStream(file);
         int bytesRead = 0;
         byte[] buffer = new byte[8192];
