@@ -1,4 +1,4 @@
-package com.xiaojun.cache;
+package com.xiaojun.config;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -18,12 +18,13 @@ import java.time.Duration;
 
 /**
  * @author long.luo
- * @date 2018/10/9 11:17
+ * @date 2018/10/9 14:05
  */
 @Configuration
-public class MyRedisConfig {
+public class BeanConfig {
 
-    @Bean(name = "redisTemplate")
+    @Bean("redisTemplate")
+    @Primary
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
@@ -34,6 +35,19 @@ public class MyRedisConfig {
         redisTemplate.setHashKeySerializer(keySerializer());
         redisTemplate.setHashValueSerializer(valueSerializer());
         return redisTemplate;
+    }
+
+    @Bean("redisObjectTemplate")
+    public RedisTemplate<Object, Object> redisObjectTemplate(RedisConnectionFactory redisConnectionFactory) {
+
+        RedisTemplate<Object, Object> redisObjectTemplate = new RedisTemplate<>();
+
+        redisObjectTemplate.setConnectionFactory(redisConnectionFactory);
+        redisObjectTemplate.setKeySerializer(keySerializer());
+        redisObjectTemplate.setValueSerializer(valueSerializer());
+        redisObjectTemplate.setHashKeySerializer(keySerializer());
+        redisObjectTemplate.setHashValueSerializer(valueSerializer());
+        return redisObjectTemplate;
     }
 
     @Primary

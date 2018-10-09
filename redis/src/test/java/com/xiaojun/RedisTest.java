@@ -30,4 +30,18 @@ public class RedisTest {
         userService.delete(5L);
     }
 
+    @Test
+    public void update() throws Exception {
+
+        for (int i = 0; i < 2; i++) {
+            new Thread(() -> {
+                User user = new User();
+                user.setId(5L);
+                userService.update(user);
+                log.info("执行了一次");
+            }).start();
+        }
+
+        Thread.sleep(10 * 1000);
+    }
 }

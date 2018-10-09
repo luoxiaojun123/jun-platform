@@ -28,4 +28,10 @@ public interface UserService {
      * @param id key值
      */
     void delete(Long id);
+
+    /**
+     * 更新
+     * @param user
+     */
+    void update(User user);
 }

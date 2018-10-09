@@ -1,5 +1,6 @@
 package com.xiaojun.cache;
 
+import com.xiaojun.annotation.RedisLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -45,5 +46,11 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         DATABASES.remove(id);
         log.info("进入 delete 方法");
+    }
+
+    @RedisLock(lockKey = "#user.id", prefix = "luo")
+    @Override
+    public void update(User user) {
+        log.info("进入 update 方法");
     }
 }
