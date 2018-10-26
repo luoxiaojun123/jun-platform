@@ -17,6 +17,7 @@
         <module>drools</module>
         <module>quartz</module>
         <module>redis</module>
+        <module>elasticsearch</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
