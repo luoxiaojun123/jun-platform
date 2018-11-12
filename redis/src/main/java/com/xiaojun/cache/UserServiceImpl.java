@@ -1,6 +1,7 @@
 package com.xiaojun.cache;
 
 import com.xiaojun.annotation.RedisLock;
+import com.xiaojun.annotation.ZookeeperLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -48,9 +49,14 @@ public class UserServiceImpl implements UserService {
         log.info("进入 delete 方法");
     }
 
-    @RedisLock(lockKey = "#user.id", prefix = "luo")
+    @ZookeeperLock(lockKey = "#user.id", prefix = "luo")
     @Override
     public void update(User user) {
-        log.info("进入 update 方法");
+        try {
+            log.info("进入 update 方法");
+            Thread.sleep(5*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
