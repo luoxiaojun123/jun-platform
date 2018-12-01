@@ -19,7 +19,7 @@ spring:
     database: 0
 logging:
   level:
-    org.springframework: DEBUG
+    org.springframework: info
 
 
 

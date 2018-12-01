@@ -24,7 +24,8 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
     public SmsCodeAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
-        super.setAuthenticated(true); // must use super, as we override
+        // must use super, as we override
+        super.setAuthenticated(true);
     }
 
 
@@ -38,6 +39,7 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
         return this.principal;
     }
 
+    @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
         if (isAuthenticated) {
             throw new IllegalArgumentException(
