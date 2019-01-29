@@ -1,4 +1,4 @@
-package com.xiaojun;
+package com.xiaojun.repository;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
@@ -8,5 +8,9 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  */
 public interface ArticleSearchRepository extends ElasticsearchRepository<Article, Integer> {
 
-
+    /**
+     * 根据标题名称删除文章
+     * @param title title
+     */
+    void deleteArticleByTitle(String title);
 }

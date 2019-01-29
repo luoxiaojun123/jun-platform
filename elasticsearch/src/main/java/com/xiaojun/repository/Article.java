@@ -1,4 +1,4 @@
-package com.xiaojun;
+package com.xiaojun.repository;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -25,5 +25,6 @@ public class Article {
     /**
      * 内容
      */
+    @Field
     private String content;
 }
