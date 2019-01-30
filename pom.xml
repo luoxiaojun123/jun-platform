@@ -18,6 +18,7 @@
         <module>quartz</module>
         <module>redis</module>
         <module>elasticsearch</module>
+        <module>admin</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
