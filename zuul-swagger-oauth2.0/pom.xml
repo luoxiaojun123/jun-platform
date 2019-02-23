@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>platform</artifactId>
+        <groupId>com.xiaojun</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>zuul-swagger-oauth2.0</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <swagger2.version>2.9.2</swagger2.version>
+    </properties>
+
+    <modules>
+        <module>zuul</module>
+        <module>service-a</module>
+        <module>service-b</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--swagger ui-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
