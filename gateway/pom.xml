@@ -15,6 +15,7 @@
         <module>spring-security</module>
         <module>spring-oauth2</module>
         <module>remote-resource-server-oauth2</module>
+        <module>authcode-server</module>
     </modules>
     <dependencies>
         <dependency>

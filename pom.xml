@@ -18,6 +18,7 @@
         <module>quartz</module>
         <module>redis</module>
         <module>elasticsearch</module>
+        <module>admin</module>
         <module>zuul-swagger-oauth2.0</module>
     </modules>
     <packaging>pom</packaging>
