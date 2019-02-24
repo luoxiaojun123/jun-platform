@@ -3,13 +3,20 @@ package com.xiaojun.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.SecurityConfiguration;
+import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.security.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author xiaojun
@@ -20,27 +27,69 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket docket() {
+    public Docket customImplementation() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
                 .select()
-                // 当前包路径
                 .apis(RequestHandlerSelectors.basePackage("com.xiaojun.controller"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .directModelSubstitute(Timestamp.class, String.class)
+                .apiInfo(apiInfo())
+                .securitySchemes(Arrays.asList(securityScheme()))
+                .securityContexts(Arrays.asList(securityContext()));
+    }
 
+    private SecurityScheme securityScheme() {
+        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant("http://localhost:8080/oauth/token");
+
+        SecurityScheme oauth = new OAuthBuilder().name("oauth2")
+                .grantTypes(Arrays.asList(grantType))
+                .scopes(Arrays.asList(scopes()))
+                .build();
+        return oauth;
+    }
+
+
+    private AuthorizationScope[] scopes() {
+        AuthorizationScope[] scopes = {
+                new AuthorizationScope("read", "for read operations"),
+                new AuthorizationScope("write", "for write operations")
+        };
+        return scopes;
+    }
+
+    @Bean
+    public SecurityConfiguration security() {
+        return SecurityConfigurationBuilder
+                .builder()
+                .clientId("clientIdPassword")
+                .clientSecret("123456")
+                .scopeSeparator(",")
+                .additionalQueryStringParams(null)
+                .useBasicAuthenticationWithAccessCodeGrant(true)
+                .build();
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        final AuthorizationScope[] authorizationScopes = new AuthorizationScope[3];
+        authorizationScopes[0] = new AuthorizationScope("read", "read all");
+        authorizationScopes[1] = new AuthorizationScope("trust", "trust all");
+        authorizationScopes[2] = new AuthorizationScope("write", "write all");
+
+        return Arrays.asList(new SecurityReference("oauth2", authorizationScopes));
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                //页面标题
-                .title("service-b")
-                //创建人
-                .contact(new Contact("luoxiaojun", "", ""))
-                //版本号
-                .version("1.0")
-                //描述
-                .description("API 描述")
+                .title("REST APIs")
+                .description("API接口")
+                .version("1.0.0")
                 .build();
     }
 }

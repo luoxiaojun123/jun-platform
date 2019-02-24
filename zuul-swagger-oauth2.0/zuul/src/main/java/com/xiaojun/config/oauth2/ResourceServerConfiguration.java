@@ -1,12 +1,10 @@
 package com.xiaojun.config.oauth2;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * @author long.luo
@@ -29,7 +27,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .authorizeRequests()
                 .antMatchers("/oauth/*").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/service-a/*","/service-b/*","/test/**").authenticated();
+                .authorizeRequests().antMatchers("/service-a/*","/service-b/*","/test_zull/**").authenticated();
     }
 
 }
