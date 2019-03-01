@@ -2,7 +2,9 @@ package com.xiaojun;
 
 import com.xiaoleilu.hutool.io.FileUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.activiti.engine.*;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -30,7 +32,7 @@ import java.util.Map;
  * @date 2018-08-19
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = BaseServiceApplication.class)
+@SpringBootTest(classes = ActivitiApplication.class)
 @Slf4j
 public class ActivitiTest {
 

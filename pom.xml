@@ -21,6 +21,7 @@
         <module>admin</module>
         <module>zuul-swagger-oauth2.0</module>
         <module>websocket</module>
+        <module>activiti</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

@@ -3,16 +3,10 @@
   <process id="transfer" isClosed="false" isExecutable="true" processType="None">
     <startEvent id="_2" name="StartEvent">
       <extensionElements>
-        <activiti:executionListener class="xiaojun.listener.activiti.MyExcutionListener" event="start">
-          <activiti:field>
-            <activiti:string/>
-          </activiti:field>
-        </activiti:executionListener>
       </extensionElements>
     </startEvent>
     <userTask activiti:exclusive="true" id="_3" name="第一级审批">
       <extensionElements>
-        <activiti:taskListener event="assignment"/>
       </extensionElements>
     </userTask>
     <userTask activiti:exclusive="true" id="_4" name="第二级审批"/>
