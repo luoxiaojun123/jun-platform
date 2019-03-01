@@ -20,6 +20,7 @@
         <module>elasticsearch</module>
         <module>admin</module>
         <module>zuul-swagger-oauth2.0</module>
+        <module>websocket</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
