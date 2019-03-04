@@ -1,0 +1,14 @@
+package test
+
+global com.xiaojun.model.Fare rideFare;
+import com.xiaojun.model.TaxiRide
+
+rule "test"
+no-loop true
+lock-on-active true
+    when
+        $taxiRide:TaxiRide(isNightSurcharge == false ,distanceInMile < 10);
+    then
+        rideFare.setNightSurcharge(0L);
+        rideFare.setRideFare(70L);
+end
