@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ServiceController {
 
 
-    @GetMapping("/zull")
+    @GetMapping("/test_zull")
     public String test(){
         return "zull success";
     }
