@@ -1,4 +1,4 @@
-package com.xiaojun.Handler;
+package com.xiaojun.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
