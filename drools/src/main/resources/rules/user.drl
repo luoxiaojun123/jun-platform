@@ -1,0 +1,34 @@
+package user
+
+import com.xiaojun.model.User;
+
+rule "userUpdate"
+no-loop true
+lock-on-active true
+    when
+        $user:User(username == "luoxiaojun");
+    then
+        $user.setAge(27);
+        update($user);
+end
+
+rule "userUpdate1"
+no-loop true
+lock-on-active true
+    when
+        $user:User(username == "xiaojun");
+    then
+        $user.setAge(20);
+        update($user);
+end
+
+
+rule "userUpdate2"
+no-loop true
+lock-on-active true
+    when
+        $user:User(age == 20);
+    then
+        $user.setPassword("123456");
+        update($user);
+end
