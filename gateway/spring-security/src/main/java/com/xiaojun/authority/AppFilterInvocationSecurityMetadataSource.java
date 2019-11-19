@@ -30,7 +30,7 @@ public class AppFilterInvocationSecurityMetadataSource implements FilterInvocati
      * 这里的需要从DB加载
      */
     private final Map<String, String> urlRoleMap = new HashMap<String, String>() {{
-        put("/info/**", "ROLE_ADMIN");
+        put("/admin/**", "ROLE_ADMIN");
     }};
 
 

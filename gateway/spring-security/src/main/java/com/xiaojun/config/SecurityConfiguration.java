@@ -106,6 +106,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/user/login")
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
+
                 .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
@@ -114,15 +115,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/me").hasAuthority("ROLE_ADMIN")
-                .accessDecisionManager(accessDecisionManager())
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    @Override
-                    public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
-                        fsi.setSecurityMetadataSource(mySecurityMetadataSource(fsi.getSecurityMetadataSource()));
-                        return fsi;
-                    }
-                })
-                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/customer/**").hasAuthority("ROLE_CUSTOMER")
+                .antMatchers("/user/**").hasAuthority("ROLE_USER")
+                .antMatchers("/login", "/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
@@ -147,22 +143,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         /// jdbcTokenRepository.setCreateTableOnStartup(true); 第一次启动的时候自动建表
         return jdbcTokenRepository;
-    }
-
-    @Bean
-    public AppFilterInvocationSecurityMetadataSource mySecurityMetadataSource(FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource) {
-        AppFilterInvocationSecurityMetadataSource appFilterInvocationSecurityMetadataSource =
-                new AppFilterInvocationSecurityMetadataSource(filterInvocationSecurityMetadataSource);
-        return appFilterInvocationSecurityMetadataSource;
-    }
-
-    @Bean
-    public AccessDecisionManager accessDecisionManager() {
-        List<AccessDecisionVoter<? extends Object>> decisionVoters
-                = Arrays.asList(
-                new WebExpressionVoter(),
-                new RoleVoter());
-        return new UnanimousBased(decisionVoters);
     }
 
     public static void main(String[] args) {
