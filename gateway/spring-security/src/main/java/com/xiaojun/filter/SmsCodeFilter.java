@@ -42,7 +42,7 @@ public class SmsCodeFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("请求URI:[{}],请求类型:[{}]", request.getRequestURI(), request.getMethod());
-        if (StringUtils.equals(LOGIN_URL, request.getRequestURI()) && StringUtils.endsWithIgnoreCase(POST, request.getMethod())) {
+            if (StringUtils.equals(LOGIN_URL, request.getRequestURI()) && StringUtils.endsWithIgnoreCase(POST, request.getMethod())) {
             validate(new ServletWebRequest(request));
         }
         // 执行下一个过滤器

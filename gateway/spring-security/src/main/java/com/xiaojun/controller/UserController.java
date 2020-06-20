@@ -16,10 +16,27 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/info")
+    @GetMapping("/admin/info")
     @ResponseBody
-    public String info() {
+    public String admin() {
         return "info";
+    }
+
+    @GetMapping("/customer/info")
+    @ResponseBody
+    public String customer() {
+        return "info";
+    }
+
+    @GetMapping("/user/info")
+    @ResponseBody
+    public String user() {
+        return "info";
+    }
+
+    @GetMapping("/error")
+    public String error() {
+        return "error";
     }
 
     @GetMapping("/me")
