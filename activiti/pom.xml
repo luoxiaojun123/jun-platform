@@ -14,7 +14,7 @@
     <properties>
         <activiti.spring.version>6.0.0</activiti.spring.version>
         <druid.version>1.1.9</druid.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
     </properties>
 
     <dependencies>
